@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     public bool isGameActive;
     public GameObject player;
 
+    [SerializeField] GameObject winMenu;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -43,5 +46,20 @@ public void RestartGame()
 {
     SceneManager.LoadScene("HordeSurvivorsScene");
 }
+void OnEnable()
+{
+    GameTimer.OnGameWon += HandleGameWon;
+}
 
+void OnDisable()
+{
+    GameTimer.OnGameWon -= HandleGameWon;
+}
+
+void HandleGameWon()
+{
+    Debug.Log("Player has won the game!");
+    winMenu.SetActive(true);
+
+}
 }

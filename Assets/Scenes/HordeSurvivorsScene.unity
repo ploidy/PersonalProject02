@@ -1254,6 +1254,7 @@ MonoBehaviour:
   restartButton: {fileID: 869312960}
   isGameActive: 0
   player: {fileID: 526447262}
+  winMenu: {fileID: 2098988429}
 --- !u!114 &274294459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1306,6 +1307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 1574135710}
+  timeToWin: 10
   winMenu: {fileID: 2098988429}
 --- !u!1001 &274738338
 PrefabInstance:
@@ -5652,6 +5654,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 1574135710}
+  timeToWin: 300
   winMenu: {fileID: 1285371082}
 --- !u!114 &1574135710
 MonoBehaviour:
