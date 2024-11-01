@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     public bool hasSpecial;
     //public Animator anim;
 
+    public static event Action OnGameOver;
 
     // Start is called before the first frame update
     void Start()
@@ -65,11 +66,7 @@ public class PlayerController : MonoBehaviour
        
        cDwnText.SetText("CoolDwn: " + cooldownValue + " (MAX 5)");
        
-       if(currentLives == 0)
-            {
-                 Debug.Log("You have died");
-                 Destroy(gameObject);
-            }
+
        if (Input.anyKey) //any input invokes Move method
             {
             Move();
@@ -143,6 +140,14 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Player Hit!");
         playerAudio.PlayOneShot(hitSound, 0.2f);
         currentLives -= damage;
+        
+        if(currentLives <= 0)
+            {
+                 currentLives = 0;
+                 Debug.Log("You have died");
+                 OnGameOver?.Invoke();
+                 //Destroy(gameObject);
+            }
     }
     
     void OnDestroy()

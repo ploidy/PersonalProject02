@@ -15,7 +15,17 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject winMenu;
 
+    private void OnEnable()
+    {
+        GameTimer.OnGameWon += HandleGameWon;
+        PlayerController.OnGameOver += GameOver;
+    }
 
+    private void OnDisable()
+    {
+        GameTimer.OnGameWon -= HandleGameWon;
+        PlayerController.OnGameOver -= GameOver;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +46,7 @@ public class GameManager : MonoBehaviour
 
 public void GameOver()
 {
-
+    Debug.Log("Game Over!");
     Time.timeScale = 0f;
     gameOverText.gameObject.SetActive(true);
     restartButton.gameObject.SetActive(true);
@@ -46,16 +56,6 @@ public void RestartGame()
 {
     SceneManager.LoadScene("HordeSurvivorsScene");
 }
-void OnEnable()
-{
-    GameTimer.OnGameWon += HandleGameWon;
-}
-
-void OnDisable()
-{
-    GameTimer.OnGameWon -= HandleGameWon;
-}
-
 void HandleGameWon()
 {
     Debug.Log("Player has won the game!");
