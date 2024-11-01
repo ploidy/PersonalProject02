@@ -11,10 +11,25 @@ public class shootArrow : MonoBehaviour
     
     
 
-    //private Rigidbody arrowRB;
+    private Rigidbody arrowRB;
     //public AudioClip arrowSound;
     //private AudioSource arrowAudio;
     // Start is called before the first frame update
+    
+    private void Awake()
+    {
+        arrowRB = GetComponent<Rigidbody>();
+        arrowRB.isKinematic = false;
+        arrowRB.collisionDetectionMode = CollisionDetectionMode.Continuous;
+    }
+    
+    //private void OnEnable(){DetectCollisions.OnArrowHit += DestroyArrow;}
+
+    //private void OnDisable()
+    //{
+    //DetectCollisions.OnArrowHit -= DestroyArrow;
+    //}
+
     
     void Start()
     {
@@ -33,4 +48,12 @@ public class shootArrow : MonoBehaviour
         Destroy(gameObject, Lifespan);
         
     }
+
+    //void DestroyArrow (GameObject arrow)
+    //{
+        //if (arrow == gameObject)
+        //{
+            //Destroy(gameObject);
+        //}
+    //}
 }

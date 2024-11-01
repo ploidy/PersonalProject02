@@ -673,6 +673,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7520341672977643540, guid: b0e8c80702d87fb4f9c231b669dcffd3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 526447272}
+    - targetCorrespondingSourceObject: {fileID: 7520341672977643540, guid: b0e8c80702d87fb4f9c231b669dcffd3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 526447275}
+    - targetCorrespondingSourceObject: {fileID: 7520341672977643540, guid: b0e8c80702d87fb4f9c231b669dcffd3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 526447276}
   m_SourcePrefab: {fileID: 100100000, guid: b0e8c80702d87fb4f9c231b669dcffd3, type: 3}
 --- !u!1001 &105568315
 PrefabInstance:
@@ -1307,7 +1313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 1574135710}
-  timeToWin: 10
+  timeToWin: 300
   winMenu: {fileID: 2098988429}
 --- !u!1001 &274738338
 PrefabInstance:
@@ -1766,6 +1772,7 @@ MonoBehaviour:
   hitSound: {fileID: 8300000, guid: b45ff6afa476d8d47ac3af0390b65a74, type: 3}
   obstacleBounce: 1000
   currentLives: 3
+  maxHp: 3
   damage: 1
   livesText: {fileID: 45542767}
   cDwnText: {fileID: 742221810}
@@ -1840,6 +1847,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xpBar: {fileID: 1624819313}
   upgradeMenu: {fileID: 274294461}
+--- !u!114 &526447275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526447262}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d20df08ae500d546b9cf2b3805a98a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &526447276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526447262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4a26fd47d806744cb14310a67b9fc38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 526447262}
 --- !u!1 &548453692
 GameObject:
   m_ObjectHideFlags: 0
@@ -5449,7 +5481,7 @@ MonoBehaviour:
   - {fileID: 3632709695007814513, guid: e50a6aa9e9e575944beb5e9a6a69b128, type: 3}
   player: {fileID: 526447262}
   spawnRange: 50
-  spawnTimer: 2.5
+  spawnTimer: 10
 --- !u!4 &1510698991
 Transform:
   m_ObjectHideFlags: 0
@@ -6541,6 +6573,7 @@ GameObject:
   - component: {fileID: 1864910998}
   - component: {fileID: 1864911000}
   - component: {fileID: 1864910999}
+  - component: {fileID: 1864911001}
   m_Layer: 0
   m_Name: wpnArrow
   m_TagString: Untagged
@@ -6666,7 +6699,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1864910997}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 40a99c205f40576488cefb9d69a07d6a, type: 3}
   m_Name: 
@@ -6681,6 +6714,18 @@ MonoBehaviour:
   button: {fileID: 0}
   upgradeMenu: {fileID: 0}
   atkSpdText: {fileID: 0}
+--- !u!114 &1864911001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864910997}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d20df08ae500d546b9cf2b3805a98a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1866407483 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8988702504334181262, guid: 1a97c9d9b66c2f947ba36912f5f701c0, type: 3}

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Events;
+using System;
 
 
 public class PlayerController : MonoBehaviour
@@ -16,6 +18,7 @@ public class PlayerController : MonoBehaviour
     //private Rigidbody playerRb;
     public float obstacleBounce = 5.0f;
     public int currentLives;
+    public int maxHp = 3;
     [SerializeField] int damage = 1;
     [SerializeField] TextMeshProUGUI livesText;
     [SerializeField] TextMeshProUGUI cDwnText;
@@ -32,7 +35,6 @@ public class PlayerController : MonoBehaviour
     //public Animator anim;
 
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -46,22 +48,33 @@ public class PlayerController : MonoBehaviour
         forward = Vector3.Normalize(forward);
         right = Quaternion.Euler(new Vector3(0,90,0)) * forward;
 
-        currentLives = 3;
+        currentLives = maxHp;
         specialAtkCooldown = 0;
         cooldownValue = 10;
         hasSpecial = true;
+        
+        PlayerCollisions.OnPlayerHit += TakeDamage;
     }
 
+
     // Update is called once per frame
+
     void Update()
     {
        livesText.SetText("Lives: " + currentLives);
        
        cDwnText.SetText("CoolDwn: " + cooldownValue + " (MAX 5)");
+       
+       if(currentLives == 0)
+            {
+                 Debug.Log("You have died");
+                 Destroy(gameObject);
+            }
        if (Input.anyKey) //any input invokes Move method
-       {
+            {
             Move();
-       }
+            }
+       
        //prevents player from going out of bounds
        if (transform.position.x < -mapRange)
        {
@@ -94,14 +107,9 @@ public class PlayerController : MonoBehaviour
         hasSpecial = true;
         specialIndicator.gameObject.SetActive(true);
         specialIndicator.transform.position = transform.position + new Vector3 (0,9.5f,0);
-       }
-       if(currentLives == 0)
-        {
-        Debug.Log("You have died");
-        Destroy(gameObject);
-        }
-       
+       }  
     }
+    
     void Move() //moves player on isometric plane
     {
         new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
@@ -110,26 +118,39 @@ public class PlayerController : MonoBehaviour
         Vector3 heading = Vector3.Normalize(upMovement + rightMovement);
         transform.forward = heading;
         transform.position += rightMovement;
-        transform.position += upMovement;
-        
+        transform.position += upMovement;    
     }
+    
     void SpecialAtk()
     {
         Instantiate(specialAtkPrefab, specialAtkDirection.position, specialAtkDirection.rotation);
 
         specialAtkCooldown = cooldownValue;
     }
-    private void OnCollisionEnter(Collision collision) //play sound if player hit by enemy
-    {
-        if(collision.gameObject.CompareTag("Enemy"))
-        {
-            Debug.Log("Player Hit!");
-            playerAudio.PlayOneShot(hitSound, 0.2f);
-            currentLives -= damage;
+    
+    //private void OnCollisionEnter(Collision collision) //play sound if player hit by enemy
+    //{
+        //if(collision.gameObject.CompareTag("Enemy"))
+        //{
+            //Debug.Log("Player Hit!");
+            //playerAudio.PlayOneShot(hitSound, 0.2f);
+            //currentLives -= damage;
                        
-        }
- 
+        //}
+  
+    void TakeDamage()
+    {
+        Debug.Log("Player Hit!");
+        playerAudio.PlayOneShot(hitSound, 0.2f);
+        currentLives -= damage;
     }
+    
+    void OnDestroy()
+    {
+        PlayerCollisions.OnPlayerHit -= TakeDamage;
+    }
+   
+   
     public void ReplenishLives()
     {
     if (currentLives >= 3)

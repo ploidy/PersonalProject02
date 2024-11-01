@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,16 +8,33 @@ public class EnemyController : MonoBehaviour
 {
     public float speed;
     public GameObject player;
+    public GameObject enemy;
     public float mapRange = 245f;
     //public Transform target;
     public float rotationSpeed = 60.0f;
-    
+    public int enemyXp;
+    public int enemyHp;
+    public int currentHp;
+    public int damage;
+    public ParticleSystem deathParticle;
+    public GameObject smokeObject;
+    [SerializeField] GameObject smokeObjectTemp;
+    public float smokeTime = 0.5f;
    
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player");
+        damage = 1;
+        currentHp = enemyHp;
     }
+
+private void OnEnable()
+{
+        EnemyCollisions.OnArrowHit += TakeArrowDamage;
+        EnemyCollisions.OnSpcAtkHit += TakeSpcDamage;
+        EnemyCollisions.OnEnemyHit += SlowOnHit;
+}
 
     // Update is called once per frame
     void Update()
@@ -46,17 +64,67 @@ public class EnemyController : MonoBehaviour
         transform.position = new Vector3(transform.position.x, transform.position.y, mapRange);
        }
 
-
+        if(currentHp <= 0)
+        {
+        EnemyDead();
+        }
     
     }
-    IEnumerator OnCollisionEnter(Collision collision) 
+    void SlowOnHit(GameObject enemy)
     {
-        if(collision.gameObject.CompareTag("Player")) //slows enemy after contact with player
+        if (enemy == gameObject)
         {
-        speed = speed * 0.4f;
-        yield return new WaitForSeconds (2.0f);
-        speed = speed * 2.5f;
-
+        currentHp -= damage;
+        deathParticle.Play();
+        Debug.Log("Enemy Slowed!");
+        StartCoroutine(SlowSpeed());
         }
+    }
+    
+    IEnumerator SlowSpeed()
+    {
+            speed = speed * 0.4f;
+            yield return new WaitForSeconds (2.0f);
+            speed = speed * 2.5f;
+    }
+    
+    void TakeArrowDamage(GameObject enemy)
+    {
+        if (enemy == gameObject)
+            {
+            Debug.Log("Enemy Hit!");
+            currentHp -= damage;
+            deathParticle.Play();
+            }
+             
+            
+    }
+    
+    void TakeSpcDamage(GameObject enemy)
+    {
+        if (enemy == gameObject)
+        {
+        Debug.Log("Enemy Hit by Special!");
+        currentHp -= damage * 2;
+        deathParticle.Play();
+        }
+    }
+    
+    void EnemyDead()
+    {
+        Debug.Log("Enemy has died");
+        Destroy(gameObject);
+        smokeObjectTemp = Instantiate(smokeObject);
+        Instantiate(smokeObjectTemp, transform.position,transform.rotation);
+        Destroy(smokeObjectTemp, smokeTime);
+        player.GetComponent<Level>().AddXp(enemyXp);
+
+    }
+    
+    void OnDisable()
+    {
+        EnemyCollisions.OnArrowHit -= TakeArrowDamage;
+        EnemyCollisions.OnSpcAtkHit -= TakeSpcDamage;
+        EnemyCollisions.OnEnemyHit -= SlowOnHit;
     }
 }
