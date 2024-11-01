@@ -20,6 +20,8 @@ public class EnemyController : MonoBehaviour
     public GameObject smokeObject;
     [SerializeField] GameObject smokeObjectTemp;
     public float smokeTime = 0.5f;
+
+    public static event Action<int> OnEnemyDead;
    
     // Start is called before the first frame update
     void Start()
@@ -113,11 +115,12 @@ private void OnEnable()
     void EnemyDead()
     {
         Debug.Log("Enemy has died");
+        OnEnemyDead?.Invoke(enemyXp);
         Destroy(gameObject);
         smokeObjectTemp = Instantiate(smokeObject);
         Instantiate(smokeObjectTemp, transform.position,transform.rotation);
         Destroy(smokeObjectTemp, smokeTime);
-        player.GetComponent<Level>().AddXp(enemyXp);
+        //player.GetComponent<Level>().AddXp(enemyXp);
 
     }
     

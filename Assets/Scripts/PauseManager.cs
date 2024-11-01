@@ -15,16 +15,23 @@ public void UnPauseGame()
 
 void OnEnable()
 {
-    GameTimer.OnGameWon += HandleGameWon;
+    GameTimer.OnGameWon += PauseGame;
+    UpgradeMenuManager.OnMenuOpen += PauseGame;
+    UpgradeMenuManager.OnMenuClose += UnPauseGame;
+    MainMenu.OnMenuOpen += PauseGame;
+    MainMenu.OnMenuClose += UnPauseGame;
 }
 
 void OnDisable()
 {
-    GameTimer.OnGameWon -= HandleGameWon;
+    GameTimer.OnGameWon -= PauseGame;
+    UpgradeMenuManager.OnMenuOpen -= PauseGame;
+    UpgradeMenuManager.OnMenuClose -= UnPauseGame;
+    MainMenu.OnMenuOpen -= UnPauseGame;
+    MainMenu.OnMenuClose -= UnPauseGame;
+
 }
 
-void HandleGameWon()
-{
-    PauseGame();
-}
+//void HandleGameWon(){PauseGame();}
+
 }

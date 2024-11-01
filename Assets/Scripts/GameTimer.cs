@@ -12,15 +12,15 @@ public class GameTimer : MonoBehaviour
     [SerializeField] private float timeToWin = 300f;
     [SerializeField] private TimeSpan timePlaying;
     //public GameObject Player;
-    [SerializeField] GameObject winMenu;
-    PauseManager pauseManager;
+    //[SerializeField] GameObject winMenu;
+    //PauseManager pauseManager;
     
     public delegate void GameWonHandler();
     public static event GameWonHandler OnGameWon;
 
     private void Awake()
     {
-        pauseManager = GetComponent<PauseManager>();
+        //pauseManager = GetComponent<PauseManager>();
     }
     void Update()
     {

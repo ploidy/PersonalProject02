@@ -11,6 +11,8 @@ int experience = 0;
 [SerializeField] XpBar xpBar;
 [SerializeField] UpgradeMenuManager upgradeMenu;
 
+public delegate void LevelUpHandler();
+public static event LevelUpHandler OnLevelup;
 
 int TO_LEVEL_UP
 {
@@ -41,15 +43,24 @@ public void CheckLevelUp()
     }
 }
 
-private void LevelUp()
+void LevelUp()
     {
         experience -= TO_LEVEL_UP;
         level += 1;
         xpBar.SetLevelTest(level);
-        upgradeMenu.OpenMenu();
+        //upgradeMenu.OpenMenu();
+        OnLevelup?.Invoke();
     }
 
+private void OnEnable()
+{
+    EnemyController.OnEnemyDead += AddXp;
+}
 
+private void OnDisable()
+{
+    EnemyController.OnEnemyDead -= AddXp;
+}
 }
 
 

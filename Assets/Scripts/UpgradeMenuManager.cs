@@ -7,11 +7,15 @@ public class UpgradeMenuManager : MonoBehaviour
     [SerializeField] GameObject menu;
     PauseManager pauseManager;
     [SerializeField] GameObject livesButton;
+
+    public delegate void MenuHandler();
+    public static event MenuHandler OnMenuOpen;
+    public static event MenuHandler OnMenuClose;
     
     // Start is called before the first frame update
     private void Awake()
     {
-        pauseManager = GetComponent<PauseManager>();
+        //pauseManager = GetComponent<PauseManager>();
 
     }
 
@@ -22,16 +26,25 @@ public class UpgradeMenuManager : MonoBehaviour
     }
     public void OpenMenu()
     {
-        pauseManager.PauseGame();
+        //pauseManager.PauseGame();
         menu.SetActive(true);
         livesButton.SetActive(true);
+        OnMenuOpen?.Invoke();
     }
     public void CloseMenu()
     {
-        pauseManager.UnPauseGame();
+        //pauseManager.UnPauseGame();
         menu.SetActive(false);
-        
+        OnMenuClose?.Invoke();
     }
     
+    void OnEnable()
+    {
+        Level.OnLevelup += OpenMenu;
+    }
 
+    void OnDisable ()
+    {
+        Level.OnLevelup -= OpenMenu;
+    }
 }

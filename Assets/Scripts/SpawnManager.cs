@@ -10,13 +10,14 @@ public class SpawnManager : MonoBehaviour
     public float spawnRange = 50f; 
     public float spawnTimer;
     float timer;
-    //public Camera camFOV;
-
-    // Start is called before the first frame update
+    
+    public delegate void EnemySpawnHandler (GameObject enemy);
+    public static event EnemySpawnHandler OnEnemySpawn;
+    
     void Start()
     {
-     //camFOV = Camera.main;
-     
+    
+    timer = spawnTimer;
     
 
     }
@@ -41,6 +42,7 @@ public class SpawnManager : MonoBehaviour
         int randomEnemy = Random.Range(0, enemyPrefab.Length);
         GameObject newEnemy = Instantiate(enemyPrefab[randomEnemy]);
         newEnemy.transform.position = position;
+        OnEnemySpawn?.Invoke(newEnemy);
         
     }
     private Vector3 RandomPosition() //generate spawn position outside FOV
