@@ -10,7 +10,6 @@ public class EnemyController : MonoBehaviour
     public GameObject player;
     public GameObject enemy;
     public float mapRange = 245f;
-    //public Transform target;
     public float rotationSpeed = 60.0f;
     public int enemyXp;
     public int enemyHp;
@@ -98,8 +97,6 @@ private void OnEnable()
             currentHp -= damage;
             deathParticle.Play();
             }
-             
-            
     }
     
     void TakeSpcDamage(GameObject enemy)
@@ -120,9 +117,7 @@ private void OnEnable()
         smokeObjectTemp = Instantiate(smokeObject);
         Instantiate(smokeObjectTemp, transform.position,transform.rotation);
         Destroy(smokeObjectTemp, smokeTime);
-        //player.GetComponent<Level>().AddXp(enemyXp);
-
-    }
+      }
     
     void OnDisable()
     {

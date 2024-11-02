@@ -60,6 +60,6 @@ void HandleGameWon()
 {
     Debug.Log("Player has won the game!");
     winMenu.SetActive(true);
-
 }
+
 }

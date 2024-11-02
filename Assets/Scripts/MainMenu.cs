@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] GameObject menu;
-    //PauseManager pauseManager;
     public delegate void MenuHandler();
     public static event MenuHandler OnMenuOpen;
     public static event MenuHandler OnMenuClose;
@@ -16,7 +15,6 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //pauseManager = GetComponent<PauseManager>();
     }
 
     // Update is called once per frame
@@ -37,7 +35,6 @@ public class MainMenu : MonoBehaviour
 
     public void CloseMenu()
     {
-        //pauseManager.UnPauseGame();
         menu.SetActive(false);
         OnMenuClose?.Invoke();
         
@@ -45,7 +42,6 @@ public class MainMenu : MonoBehaviour
     
     public void OpenMenu()
     {
-        //pauseManager.PauseGame();
         menu.SetActive(true);
         OnMenuOpen?.Invoke();
     }

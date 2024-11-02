@@ -15,7 +15,6 @@ public class UpgradeMenuManager : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        //pauseManager = GetComponent<PauseManager>();
 
     }
 
@@ -26,14 +25,12 @@ public class UpgradeMenuManager : MonoBehaviour
     }
     public void OpenMenu()
     {
-        //pauseManager.PauseGame();
         menu.SetActive(true);
         livesButton.SetActive(true);
         OnMenuOpen?.Invoke();
     }
     public void CloseMenu()
     {
-        //pauseManager.UnPauseGame();
         menu.SetActive(false);
         OnMenuClose?.Invoke();
     }

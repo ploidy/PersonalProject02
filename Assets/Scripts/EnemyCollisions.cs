@@ -16,22 +16,17 @@ void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Arrow"))
         {
-        //maxHp -= damage;
-        //deathParticle.Play();
-        //Destroy(other.gameObject);
             OnArrowHit?.Invoke(gameObject);
             Destroy(other.gameObject);
         }
         if (other.gameObject.CompareTag("SpecialAtk"))
         {
-        //maxHp -= damage * 2;
-        //deathParticle.Play();
             OnSpcAtkHit?.Invoke(gameObject);
         }
         if (other.gameObject.CompareTag("Player"))
         {
             OnEnemyHit?.Invoke(gameObject);
-        //maxHp -= damage;
+      
         }
     }
 }

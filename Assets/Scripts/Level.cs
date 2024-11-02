@@ -48,7 +48,6 @@ void LevelUp()
         experience -= TO_LEVEL_UP;
         level += 1;
         xpBar.SetLevelTest(level);
-        //upgradeMenu.OpenMenu();
         OnLevelup?.Invoke();
     }
 
