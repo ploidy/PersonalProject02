@@ -5480,7 +5480,7 @@ MonoBehaviour:
   - {fileID: 3632709695007814513, guid: e50a6aa9e9e575944beb5e9a6a69b128, type: 3}
   player: {fileID: 526447262}
   spawnRange: 50
-  spawnTimer: 5
+  spawnTimer: 2.5
 --- !u!4 &1510698991
 Transform:
   m_ObjectHideFlags: 0

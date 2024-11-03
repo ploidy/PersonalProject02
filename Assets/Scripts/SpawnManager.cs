@@ -17,9 +17,6 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
     
-    timer = spawnTimer;
-    
-
     }
 
     // Update is called once per frame
