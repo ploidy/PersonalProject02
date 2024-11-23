@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class wpnArrow : MonoBehaviour
 {
@@ -16,12 +17,17 @@ public class wpnArrow : MonoBehaviour
     [SerializeField] GameObject button;
     [SerializeField] UpgradeMenuManager upgradeMenu;
     [SerializeField] TextMeshProUGUI atkSpdText;
+
+    public delegate void ShootArrow();
+    public static event ShootArrow ShootAnim;
+    
     
     // Start is called before the first frame update
     void Start()
     {
         arrowAudio = GetComponent<AudioSource>();
         timeToAttack = 2f;
+        
     }
 
     // Update is called once per frame
@@ -43,6 +49,7 @@ public class wpnArrow : MonoBehaviour
     {
         Instantiate(arrowPrefab, arrowDirection.position, arrowDirection.rotation);
         arrowAudio.PlayOneShot(arrowSound, 1.0f);
+        ShootAnim?.Invoke();
     }
 
     public void UpgradeArrow()

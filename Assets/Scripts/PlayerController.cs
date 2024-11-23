@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
 using System;
+using Unity.Mathematics;
 
 
 public class PlayerController : MonoBehaviour
@@ -22,7 +23,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int damage = 1;
     [SerializeField] TextMeshProUGUI livesText;
     [SerializeField] TextMeshProUGUI cDwnText;
-    //private Animator playerAnim;
+    private Animator playerAnim;
     public float specialAtkCooldown;
     [SerializeField] private float cooldownValue;
     public GameObject specialAtkPrefab;
@@ -32,16 +33,31 @@ public class PlayerController : MonoBehaviour
     [SerializeField] UpgradeMenuManager upgradeMenu;
     public GameObject specialIndicator;
     public bool hasSpecial;
+    public bool isMoving;
     //public Animator anim;
 
     public static event Action OnGameOver;
 
     // Start is called before the first frame update
+    private void OnEnable()
+    {
+        wpnArrow.ShootAnim += HandleShootArrow;
+    }
+
+    private void OnDisable()
+    {
+        wpnArrow.ShootAnim -= HandleShootArrow;
+    }
+    private void HandleShootArrow()
+    {
+        playerAnim.SetTrigger("ArrowTrigger");
+    }
+
     void Start()
     {
         //playerRb = GetComponent<Rigidbody>();
         playerAudio = GetComponent<AudioSource>();
-        //playerAnim = GetComponent<Animator>();
+        playerAnim = GetComponent<Animator>();
         
         //sets 'forward' & right to camera view
         forward = Camera.main.transform.forward;
@@ -53,10 +69,12 @@ public class PlayerController : MonoBehaviour
         specialAtkCooldown = 0;
         cooldownValue = 10;
         hasSpecial = true;
+        isMoving = false;
         
         PlayerCollisions.OnPlayerHit += TakeDamage;
     }
 
+ 
 
     // Update is called once per frame
 
@@ -66,7 +84,17 @@ public class PlayerController : MonoBehaviour
        
        cDwnText.SetText("CoolDwn: " + cooldownValue + " (MAX 5)");
        
-
+       if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+       {
+        isMoving = false;
+       }
+       
+       if (isMoving == false)
+        {
+            playerAnim.SetBool("Run", false);
+            playerAnim.SetBool("Static", true);
+        }
+       
        if (Input.anyKey) //any input invokes Move method
             {
             Move();
@@ -115,7 +143,10 @@ public class PlayerController : MonoBehaviour
         Vector3 heading = Vector3.Normalize(upMovement + rightMovement);
         transform.forward = heading;
         transform.position += rightMovement;
-        transform.position += upMovement;    
+        transform.position += upMovement;
+        isMoving = true;
+        playerAnim.SetBool("Run", true);
+        playerAnim.SetBool("Static", false);
     }
     
     void SpecialAtk()
@@ -146,6 +177,7 @@ public class PlayerController : MonoBehaviour
                  currentLives = 0;
                  Debug.Log("You have died");
                  OnGameOver?.Invoke();
+                 playerAnim.SetBool("Death", true);
                  //Destroy(gameObject);
             }
     }

@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/StartMenu.unity
+    guid: d07165f510bb5764fb2e3679a10ed989
+  - enabled: 1
+    path: Assets/Scenes/HordeSurvivorsScene.unity
+    guid: ffb92004cf95f4d43be894227f4a14ab
   m_configObjects: {}
