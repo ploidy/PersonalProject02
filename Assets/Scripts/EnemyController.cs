@@ -117,7 +117,7 @@ private void OnEnable()
         smokeObjectTemp = Instantiate(smokeObject);
         Instantiate(smokeObjectTemp, transform.position,transform.rotation);
         Destroy(smokeObjectTemp, smokeTime);
-      }
+        }
     
     void OnDisable()
     {
